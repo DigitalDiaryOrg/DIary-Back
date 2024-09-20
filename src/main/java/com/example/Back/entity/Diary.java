@@ -3,6 +3,7 @@ package com.example.Back.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.example.Back.dto.DiaryDto;
 import com.example.Back.repository.DiaryRepository;
 import com.example.Back.repository.converter.EmotionFieldConverter;
 import jakarta.persistence.*;
@@ -10,6 +11,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -59,6 +62,13 @@ public class Diary {
 		this.praise = praise;
 	}
 
+	public void update(DiaryDto.Request diaryReqDto){
+		this.emotionField=diaryReqDto.getEmotionField();
+		this.musicId=diaryReqDto.getMusicId();
+		this.musicTitle=diaryReqDto.getMusicTitle();
+		this.content=diaryReqDto.getContent();
+		this.praise=diaryReqDto.getPraise();
+	}
 
 	
 }

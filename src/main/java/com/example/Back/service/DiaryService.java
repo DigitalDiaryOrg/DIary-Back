@@ -6,6 +6,9 @@ import com.example.Back.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.util.Optional;
+
 @Service
 public class DiaryService {
     private final DiaryRepository diaryRepository;
@@ -14,18 +17,20 @@ public class DiaryService {
         this.diaryRepository=diaryRepository;
     }
 
+    public Optional<Diary> get(String dateStr, String email) throws ParseException {
+
+        return diaryRepository.findDiaryByDateAndMember_Email(DateUtil.convertStrToDate(dateStr), email);
+    }
+
     public void save(Diary diary){
         diaryRepository.save(diary);
     }
 
-    public Diary get(String dateStr, String email){
-        try {
-            return diaryRepository.findDiaryByDateAndMember_Email(DateUtil.convertStrToDate(dateStr), email).orElseThrow();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
+    public void delete(String dateStr, String email) throws ParseException {
+        Diary diary = this.get(dateStr, email).orElseThrow();
+        diaryRepository.delete(diary);
     }
+
 
 
 

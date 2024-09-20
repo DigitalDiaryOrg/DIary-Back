@@ -1,7 +1,9 @@
 package com.example.Back.dto;
 
 import com.example.Back.entity.Diary;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -11,11 +13,11 @@ public class DiaryDto {
     @Getter
     @Setter
     public static class Response{
-        public List<String> emotionField;
-        public String musicTitle;
-        public String musicId;
-        public String content;
-        public String praise;
+        private List<String> emotionField;
+        private String musicTitle;
+        private String musicId;
+        private String content;
+        private String praise;
 
         public Response(Diary diary){
             this.emotionField = diary.getEmotionField();
@@ -24,5 +26,19 @@ public class DiaryDto {
             this.content = diary.getContent();
             this.praise = diary.getPraise();
         }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Request{
+        private List<String> emotionField;
+        private String date;
+        private String content;
+        private String musicTitle;
+        private String musicId;
+        private String praise;
+        private String email;
     }
 }
