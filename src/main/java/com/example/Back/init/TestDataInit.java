@@ -13,10 +13,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @Slf4j
-@RequiredArgsConstructor
 public class TestDataInit {
     private final MemberRepository memberRepository;
     private final DiaryRepository diaryRepository;
+
+    public TestDataInit(MemberRepository memberRepository, DiaryRepository diaryRepository) {
+        this.memberRepository = memberRepository;
+        this.diaryRepository = diaryRepository;
+    }
 
     @EventListener(ApplicationReadyEvent.class)
     public void initData(){
