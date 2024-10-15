@@ -25,13 +25,13 @@ public class TestDataInit {
     @EventListener(ApplicationReadyEvent.class)
     public void initData(){
         log.info("test data init");
-        Member member1 = Member.builder().email("email1").password("password1").nickname("nickname1").build();
+        Member member1 = Member.builder().email("email1@mail.com").password("password1").nickname("nickname1").build();
         memberRepository.save(member1);
-        Member member2 = Member.builder().email("email2").password("password2").nickname("nickname2").build();
+        Member member2 = Member.builder().email("email2@mail.com").password("password2").nickname("nickname2").build();
         memberRepository.save(member2);
-        Member member3 = Member.builder().email("email3").password("password3").nickname("nickname3").build();
+        Member member3 = Member.builder().email("email3@mail.com").password("password3").nickname("nickname3").build();
         memberRepository.save(member3);
-        Member member4 = Member.builder().email("email4").password("password4").nickname("nickname4").build();
+        Member member4 = Member.builder().email("email4@mail.com").password("password4").nickname("nickname4").build();
         memberRepository.save(member4);
 
         diaryRepository.save(Diary.builder().content("content1")
