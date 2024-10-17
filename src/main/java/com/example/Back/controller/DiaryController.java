@@ -29,7 +29,7 @@ public class DiaryController {
     @GetMapping("/{date}/{email}")
     public ResponseDto.Response<DiaryDto.Response> getDiary(
             @Parameter(description = "작성 날짜", example = "2024-10-15") @PathVariable("date") String date,
-            @Parameter(description = "사용자 이메일", example = "email1@mail.com") @PathVariable("email") String email) throws ParseException {
+            @Parameter(description = "사용자 이메일", example = "kimkim@gmail.com") @PathVariable("email") String email) throws ParseException {
         Diary diary= diaryService.get(date, email).orElseThrow();
         return ResponseUtils.ok(new DiaryDto.Response(diary));
     }
@@ -47,7 +47,8 @@ public class DiaryController {
     @PostMapping("/delete")
     public ResponseDto.Response<ResponseDto.Success> deleteDiary(
             @Parameter(description = "작성 날짜", example = "2024-10-15") @RequestParam("date") String date,
-            @Parameter(description = "사용자 이메일", example = "email2@mail.com") @RequestParam("email") String email) throws ParseException {
+            @Parameter(description = "사용자 이메일", example = "kimkim@gmail.com") @RequestParam("email") String email) throws ParseException {
+        System.out.println(date+" "+email);
         diaryService.delete(date, email);
         return ResponseUtils.ok(new ResponseDto.Success("삭제 완료"));
     }
