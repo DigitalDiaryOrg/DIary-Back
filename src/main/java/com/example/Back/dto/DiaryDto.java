@@ -47,7 +47,7 @@ public class DiaryDto {
         private String musicId;
         @Schema(description = "오늘의 칭찬", example = "씩씩하게 비를 맞았다")
         private String praise;
-        @Schema(description = "이메일", example = "email1@mail.com")
+        @Schema(description = "이메일", example = "kimkim@gmail.com")
         private String email;
     }
 }

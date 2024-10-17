@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -26,13 +28,13 @@ public class Diary {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "user_id", updatable = false)
 	private Member member;
 
 	@Column(name="date")
 	@Temporal(TemporalType.DATE)
-	@CreatedDate
 	private Date date;
 
 	@Column(name="emotion_field")
@@ -53,21 +55,24 @@ public class Diary {
 
 	@Builder
 	public Diary(Member member, List<String> emotionField, String musicTitle,
-				 String musicId, String content, String praise) {
+				 String musicId, String content, String praise, Date date) {
 		this.member = member;
 		this.emotionField = emotionField;
 		this.musicTitle = musicTitle;
 		this.musicId = musicId;
 		this.content = content;
 		this.praise = praise;
+		this.date = date;
 	}
 
-	public void update(DiaryDto.Request diaryReqDto){
-		this.emotionField=diaryReqDto.getEmotionField();
-		this.musicId=diaryReqDto.getMusicId();
-		this.musicTitle=diaryReqDto.getMusicTitle();
-		this.content=diaryReqDto.getContent();
-		this.praise=diaryReqDto.getPraise();
+	public Diary update(Diary newDiary){
+		this.emotionField=newDiary.getEmotionField();
+		this.musicId=newDiary.getMusicId();
+		this.musicTitle=newDiary.getMusicTitle();
+		this.content=newDiary.getContent();
+		this.praise=newDiary.getPraise();
+
+		return this;
 	}
 
 	

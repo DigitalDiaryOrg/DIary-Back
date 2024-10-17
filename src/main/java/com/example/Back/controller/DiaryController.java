@@ -10,11 +10,8 @@ import com.example.Back.util.ResponseUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.ParseException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/diary")
@@ -32,7 +29,7 @@ public class DiaryController {
     @GetMapping("/{date}/{email}")
     public ResponseDto.Response<DiaryDto.Response> getDiary(
             @Parameter(description = "작성 날짜", example = "2024-10-15") @PathVariable("date") String date,
-            @Parameter(description = "사용자 이메일", example = "email1@mail.com") @PathVariable("email") String email) throws ParseException {
+            @Parameter(description = "사용자 이메일", example = "kimkim@gmail.com") @PathVariable("email") String email) throws ParseException {
         Diary diary= diaryService.get(date, email).orElseThrow();
         return ResponseUtils.ok(new DiaryDto.Response(diary));
     }
@@ -40,24 +37,9 @@ public class DiaryController {
     @Operation(summary = "일기 작성 API")
     @PostMapping("/post")
     public ResponseDto.Response<ResponseDto.Success> postDiary(@RequestBody DiaryDto.Request diaryReqDto) throws ParseException {
-        Optional<Diary> diary= diaryService.get(diaryReqDto.getDate(), diaryReqDto.getEmail());
+        Member member = memberService.get(diaryReqDto.getEmail());
+        diaryService.save(member, diaryReqDto);
 
-        if(diary.isEmpty()) {
-            Member member = memberService.get(diaryReqDto.getEmail());
-            Diary newDiary = Diary.builder()
-                    .member(member)
-                    .emotionField(diaryReqDto.getEmotionField())
-                    .musicId(diaryReqDto.getMusicId())
-                    .musicTitle(diaryReqDto.getMusicTitle())
-                    .content(diaryReqDto.getContent())
-                    .praise(diaryReqDto.getPraise())
-                    .build();
-            diaryService.save(newDiary);
-        }else{
-            Diary oldDiary = diary.get();
-            oldDiary.update(diaryReqDto);
-            diaryService.save(oldDiary);
-        }
         return ResponseUtils.ok(new ResponseDto.Success("일기 작성 완료"));
     }
 
@@ -65,7 +47,8 @@ public class DiaryController {
     @PostMapping("/delete")
     public ResponseDto.Response<ResponseDto.Success> deleteDiary(
             @Parameter(description = "작성 날짜", example = "2024-10-15") @RequestParam("date") String date,
-            @Parameter(description = "사용자 이메일", example = "email2@mail.com") @RequestParam("email") String email) throws ParseException {
+            @Parameter(description = "사용자 이메일", example = "kimkim@gmail.com") @RequestParam("email") String email) throws ParseException {
+        System.out.println(date+" "+email);
         diaryService.delete(date, email);
         return ResponseUtils.ok(new ResponseDto.Success("삭제 완료"));
     }
