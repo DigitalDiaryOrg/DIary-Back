@@ -32,7 +32,6 @@ public class Diary {
 
 	@Column(name="date")
 	@Temporal(TemporalType.DATE)
-	@CreatedDate
 	private Date date;
 
 	@Column(name="emotion_field")
@@ -53,21 +52,24 @@ public class Diary {
 
 	@Builder
 	public Diary(Member member, List<String> emotionField, String musicTitle,
-				 String musicId, String content, String praise) {
+				 String musicId, String content, String praise, Date date) {
 		this.member = member;
 		this.emotionField = emotionField;
 		this.musicTitle = musicTitle;
 		this.musicId = musicId;
 		this.content = content;
 		this.praise = praise;
+		this.date = date;
 	}
 
-	public void update(DiaryDto.Request diaryReqDto){
-		this.emotionField=diaryReqDto.getEmotionField();
-		this.musicId=diaryReqDto.getMusicId();
-		this.musicTitle=diaryReqDto.getMusicTitle();
-		this.content=diaryReqDto.getContent();
-		this.praise=diaryReqDto.getPraise();
+	public Diary update(Diary newDiary){
+		this.emotionField=newDiary.getEmotionField();
+		this.musicId=newDiary.getMusicId();
+		this.musicTitle=newDiary.getMusicTitle();
+		this.content=newDiary.getContent();
+		this.praise=newDiary.getPraise();
+
+		return this;
 	}
 
 	
