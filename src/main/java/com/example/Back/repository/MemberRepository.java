@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface MemberRepository extends ListCrudRepository<Member, Long> {
     public Optional<Member> findMemberByEmail(String email);
+    public Optional<Member> findMemberByEmailAndProvider(String email,String provider);
+
 }
