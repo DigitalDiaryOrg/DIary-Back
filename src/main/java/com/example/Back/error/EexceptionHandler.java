@@ -15,6 +15,6 @@ public class EexceptionHandler {
     @ExceptionHandler
     public ResponseDto.Response<ResponseDto.Error> handleAllException(Exception e){
         log.warn(e.getMessage());
-        return ResponseUtils.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+        return ResponseUtils.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버 오류가 발생했습니다");
     }
 }
