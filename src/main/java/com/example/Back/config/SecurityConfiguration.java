@@ -36,7 +36,7 @@ public class SecurityConfiguration{
                 .oauth2Login(Customizer.withDefaults())
 
                 .authorizeHttpRequests((auth)->{auth
-                        .requestMatchers("/diary/**").authenticated()
+                        .requestMatchers("/auth/test/**").authenticated()
                         .anyRequest().permitAll();
                 })
                 .oauth2Login((oauth2)->oauth2
