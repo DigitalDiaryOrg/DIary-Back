@@ -20,16 +20,25 @@ public class Member {
 	@Column(name="email")
 	private String email;
 
-	@Column(name="password")
-	private String password;
+	@Column(name="provider")
+	private String provider;
 
 	@Column(name="nickname")
 	private String nickname;
 
+	@Column(name="role")
+	private String role;
+
+
 	@Builder
-	public Member(String email, String password, String nickname) {
+	public Member(String email, String provider, String nickname, String role) {
 		this.email = email;
-		this.password = password;
+		this.provider = provider;
 		this.nickname = nickname;
+		this.role=role;
+	}
+
+	public void update (String email){
+		this.email=email;
 	}
 }
